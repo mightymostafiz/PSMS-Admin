@@ -18,7 +18,7 @@ require_once('header.php');
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body"> 
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="teacher_table">
                     <thead>
                       <tr>
                         <th class="text-center">#</th>

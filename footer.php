@@ -28,6 +28,25 @@
   <!-- Custom js for this page-->
   <script src="js/dashboard.js"></script>
   <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+  <script src="vendors/js/dataTables.buttons.min.js"></script>
+  <script src="vendors/js/pdfmake.min.js"></script>
+  <script src="vendors/js/vfs_fonts.js"></script>
+  <script src="vendors/js/buttons.html5.min.js"></script>
+  <script>
+    $(document).ready( function () {
+      $('#teacher_table').DataTable(
+        {
+        dom: 'Bfrtip',
+        buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+          ]
+        } 
+      );
+    } );
+  </script>
   <!-- End custom js for this page-->
 </body>
 
