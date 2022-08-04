@@ -1,5 +1,38 @@
 <?php
 require_once('config.php');
+session_start();
+
+if(isset($_POST['login_btn'])){
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+
+  if(empty($username)){
+    $error = "Please enter your Username";
+  }
+  else if(empty($password)){
+    $error = "Please enter your Password";
+  }
+  else{
+    $stm = $pdo->prepare("SELECT * FROM admin WHERE username=? AND password=?");
+    $stm->execute(array($username,SHA1($password)));
+    $adminCount = $stm->rowCount();
+
+    if($adminCount == 1){
+      $adminData = $stm->fetchAll(PDO::FETCH_ASSOC);
+      $_SESSION['admin_loggedin'] = $adminData;
+
+      header('location:index.php');
+    }
+    else{
+      $error = "Username or Password is Wrong!";
+    }
+      
+  }
+  
+}
+if(isset($_SESSION['admin_loggedin'])){
+  header('location:index.php');
+}
 ?>
 
 
@@ -33,15 +66,22 @@ require_once('config.php');
               <div class="brand-logo">
                 <h2 class="text-center" style="color:purple">Admin Login</h2>
               </div>
-              <form class="pt-3">
+              <form class="pt-3" method="POST" action="">
+                <!-- Alert Show -->
+                <?php if(isset($error)) :?>
+                  <div class="alert alert-danger">
+                    <?php echo $error; ?>
+                  </div>
+                <?php endif; ?>
+
                 <div class="form-group">
-                  <input type="text" class="form-control form-control-lg" naem="username" placeholder="Username">
+                  <input type="text" class="form-control form-control-lg" name="username" placeholder="Username">
                 </div>
                 <div class="form-group">
                   <input type="password" class="form-control form-control-lg" name="password" placeholder="Password">
                 </div>
                 <div class="mt-3">
-                  <button type="submit" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn">LOGIN</button>
+                  <button type="submit" name="login_btn" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn">LOGIN</button>
                 </div>
                 
                 
