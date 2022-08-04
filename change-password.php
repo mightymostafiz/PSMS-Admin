@@ -37,7 +37,7 @@ if(isset($_POST['change_btn'])){
         $newPassword = SHA1($confirm_new_password);
 
         $stm = $pdo->prepare("UPDATE admin SET password=? WHERE id=?");
-        $stm->execute(array($newPassword,$admin_id));
+        $stm->execute(array($new_password,$admin_id));
 
         $success = "Change Password successfully done!";
     }

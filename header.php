@@ -17,6 +17,7 @@ if(!isset($_SESSION['admin_loggedin'])){
   <title>Admin Dashboard</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
   <!-- endinject -->
   <!-- inject:css -->
@@ -257,7 +258,7 @@ if(!isset($_SESSION['admin_loggedin'])){
             </a>
             <div class="collapse" id="ui-2">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="">All Teachers</a></li>
+                <li class="nav-item"> <a class="nav-link" href="teacher-all.php">All Teachers</a></li>
                 <li class="nav-item"> <a class="nav-link" href="">Search</a></li>
               </ul>
             </div>
