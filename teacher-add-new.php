@@ -13,9 +13,9 @@ if(isset($_POST['create_btn'])){
     $admin_id = $_SESSION['admin_loggedin'][0]['id'];
     
     // Teachers mobile count
-    $mobileCount = teacherCount('mobile',$t_mobile);
+    $mobileCount = getCount('teachers','mobile',$t_mobile);
     // Teachers email count
-    $emailCount = teacherCount('email',$t_email);
+    $emailCount = getCount('teachers','email',$t_email);
 
     if(empty($t_name)){
         $error = "Name is required!";
