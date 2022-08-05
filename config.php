@@ -32,7 +32,7 @@
     //     return $count;                                                    
     // }
 
-    
+
     // Get All count any column value for Any table
     function getCount($tbl,$col,$val){
         global $pdo;
@@ -41,7 +41,15 @@
         $count = $stm->rowCount();
         return $count;                                                    
     }
-    
+
+    // get subject name from subjects table
+    function getSubjectName($id){
+    global $pdo;
+    $stm=$pdo->prepare("SELECT name,code FROM subjects WHERE id=?");
+    $stm->execute(array($id));
+    $result = $stm->fetchAll(PDO::FETCH_ASSOC);
+    return $result[0]['name']."-".$result[0]['code'];
+    }
     // Get students data
     // function Student($col,$id){
     //    global $pdo;
