@@ -44,6 +44,7 @@ require_once('header.php');
                             <td class="text-center"><?php echo date('d-m-Y', strtotime($class['start_date']))  ;?></td>
                             <td class="text-center"><?php echo date('d-m-Y', strtotime($class['end_date']))  ;?></td>
                             <td class="text-center"><?php 
+                            // subject list decode
                             $subjectList = json_decode($class['subjects']);
                             foreach($subjectList as $newSubject) {
                                 echo getSubjectName($newSubject)." <br>";
