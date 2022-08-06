@@ -2,20 +2,31 @@
 require_once('header.php'); 
 
 if(isset($_POST['create_btn'])){
-    $teacher = $_POST['teacher'];
-    $subject = $_POST['subject'];
-    
-    // Assign subject count count
-    $subjectCount = getCount('assign_teachers','subject_id',$subject);
+    $class_name = $_POST['class_name'];
+    $subject_name = $_POST['subject_name'];
+    $time_from = $_POST['time_from'];
+    $time_to = $_POST['time_to'];
+    $room_no = $_POST['room_no'];
+    // get teacher name form subjects table
+    $teacher_id = getSubjectTeacher($subject_name);;
 
-    if($subjectCount !=0 ){
-        $error = "Already Assign Teacher for This Subject!";
+    if(empty($class_name)){
+        $error = "Class name is required!!";
+    }
+    else if(empty($subject_name)){
+        $error = "Subject name is required!!";
+    }
+    else if(empty($time_from)){
+        $error = "Time from is required!!";
+    }
+    else if(empty($time_to)){
+        $error = "Time to is required!!";
     }
     else{
-        $insert = $pdo->prepare("INSERT INTO assign_teachers(teacher_id,subject_id) VALUES(?,?)");
-        $insert->execute(array($teacher,$subject));
+        $insert = $pdo->prepare("INSERT INTO class_routine(class_name,subject_id,teacher_id,time_from,time_to,room_no) VALUES(?,?,?,?,?,?)");
+        $insert->execute(array($class_name,$subject_name,$teacher_id,$time_from,$time_to,$room_no));
 
-        $success = "Assign Teacher Successfully!";
+        $success = "Routine Create Success!";
     }
 }
 ?>
@@ -36,10 +47,10 @@ if(isset($_POST['create_btn'])){
         <div class="card">
             <div class="card-body">  
                 <?php if(isset($error)) :?>
-                    <div class="alert alert-danger"><?php echo $error;?></div>
+                    <div class="alert alert-danger text-center"><?php echo $error;?></div>
                 <?php endif;?>
                 <?php if(isset($success)) :?>
-                    <div class="alert alert-success"><?php echo $success;?></div>
+                    <div class="alert alert-success text-center"><?php echo $success;?></div>
                 <?php endif;?>
 
                 <form class="forms-sample" method="POST" action="">
@@ -53,6 +64,7 @@ if(isset($_POST['create_btn'])){
                         ?>
 
                         <select name="class_name" id="class_name" class="form-control">
+                            <option value="">Select class</option>
                             <?php foreach($lists as $list): ?>
                             <option value="<?php echo $list['id']; ?>"><?php echo $list['class_name']; ?></option>
                             <?php endforeach; ?>
@@ -84,7 +96,7 @@ if(isset($_POST['create_btn'])){
                         <input type="text" name="room_no" id="room_no" class="form-control">
                     </div>
                     
-                    <button type="submit" name="create_btn" class="btn btn-gradient-primary mr-2">Assign Subject</button> 
+                    <button type="submit" name="create_btn" class="btn btn-gradient-primary mr-2">Create Routine</button> 
                 </form>
             </div>
         </div>

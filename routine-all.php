@@ -9,45 +9,39 @@ require_once('header.php');
     <div class="page-header">
   <h3 class="page-title">
     <span class="page-title-icon bg-gradient-primary text-white mr-2">
-      <i class="mdi mdi-account-multiple"></i>                 
+      <i class="mdi mdi-kodi "></i>                 
     </span>
-   All Teacher
+   All Class Routine
   </h3> 
 </div>
 <div class="row">
-    <div class="col-md-12 grid-margin stretch-card">
+    <div class="col-md-8 grid-margin stretch-card">
         <div class="card">
             <div class="card-body"> 
-                <table class="table table-bordered" id="teacher_table">
+                
+                <table class="table table-bordered">
                     <thead>
                       <tr>
-                        <th class="text-center">#</th>
-                        <th class="text-center">Name</th>
-                        <th class="text-center">Email</th>
-                        <th class="text-center">Mobile</th>
-                        <th class="text-center">Gender</th>
+                        <th class="text-center" style="width: 50px;">#</th>
+                        <th class="text-center">Class Name</th>
                         <th class="text-center">Action</th>
                       </tr>
                     </thead>
 
                     <tbody>
                         <?php 
-                            $stm = $pdo->prepare("SELECT * FROM teachers ORDER BY id DESC");
+                            $stm = $pdo->prepare("SELECT DISTINCT class_name FROM class_routine ORDER BY class_name ASC");
                             $stm->execute();
-                            $teacherList = $stm->fetchAll(PDO::FETCH_ASSOC);
+                            $classList = $stm->fetchAll(PDO::FETCH_ASSOC);
 
                             $i=1;
-                            foreach($teacherList as $teacher):
+                            foreach($classList as $list):
                         ?>
                         <tr>
                             <td class="text-center"><?php echo $i; $i++; ?></td>
-                            <td class="text-center"><?php echo $teacher['name'] ?></td>
-                            <td class="text-center"><?php echo $teacher['email'] ?></td>
-                            <td class="text-center"><?php echo $teacher['mobile'] ?></td>
-                            <td class="text-center"><?php echo $teacher['gender'] ?></td>
+                            <td class="text-center"><?php echo getClassName($list['class_name'],'class_name') ;?></td>
                             <td class="text-center">
-                            <a href="" class="btn btn-sm btn-warning"><i class="mdi mdi-brush"></i></a>&nbsp
-                            <a href="" class="btn btn-sm btn-danger"><i class="mdi mdi-delete "></i></a>
+                            <a href="routine-details.php? id=<?php echo $list['class_name'] ;?>" class="btn btn-sm btn-success"><i class="mdi mdi-eye"></i>View Class Routine</a>
                             </td>
                         </tr>
                         <?php endforeach; ?>
