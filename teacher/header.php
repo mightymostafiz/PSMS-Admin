@@ -42,7 +42,7 @@ if(!isset($_SESSION['teacher_loggedin'])){
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
               <div class="nav-profile-img">
-                <img src="../images/faces/admin.jpg" alt="image">
+                <img src="../images/faces/face3.jpg" alt="image">
                 <span class="availability-status online"></span>             
               </div>
               <div class="nav-profile-text">
@@ -100,7 +100,7 @@ if(!isset($_SESSION['teacher_loggedin'])){
               <div class="dropdown-divider"></div>
               <a class="dropdown-item preview-item">
                 <div class="preview-thumbnail">
-                    <img src="images/faces/face3.jpg" alt="image" class="profile-pic">
+                    <img src="images/faces/face4.jpg" alt="image" class="profile-pic">
                 </div>
                 <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
                   <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Profile picture updated</h6>
@@ -187,17 +187,10 @@ if(!isset($_SESSION['teacher_loggedin'])){
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-6" aria-expanded="false" aria-controls="ui-6">
+            <a class="nav-link" href="class-routine.php">
               <span class="menu-title">Class Routine</span>
-              <i class="menu-arrow"></i>
-              <i class=" mdi mdi-kodi menu-icon"></i>
+              <i class="mdi mdi-kodi menu-icon"></i>
             </a>
-            <div class="collapse" id="ui-6">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="">All Routine</a></li>
-                <li class="nav-item"> <a class="nav-link" href="">Add New</a></li>
-              </ul>
-            </div>
           </li>
 
           <li class="nav-item">
