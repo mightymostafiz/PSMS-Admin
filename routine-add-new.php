@@ -7,6 +7,7 @@ if(isset($_POST['create_btn'])){
     $time_from = $_POST['time_from'];
     $time_to = $_POST['time_to'];
     $room_no = $_POST['room_no'];
+    $day = $_POST['day'];
     // get teacher name form subjects table
     $teacher_id = getSubjectTeacher($subject_name);;
 
@@ -77,6 +78,19 @@ if(isset($_POST['create_btn'])){
 
                         <select name="subject_name" id="subject_name" class="form-control">
 
+                        </select>
+                    </div>
+
+                    <!-- Select Day -->
+                    <div class="form-group">
+                        <label for="day">Select Day:</label> 
+                        <select name="day" id="day" class="form-control">
+                            <option value="Saturday">Saturday</option>
+                            <option value="Sunday">Sunday</option>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
                         </select>
                     </div>
 
