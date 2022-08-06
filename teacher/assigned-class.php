@@ -9,9 +9,9 @@ require_once('header.php');
     <div class="page-header">
   <h3 class="page-title">
     <span class="page-title-icon bg-gradient-primary text-white mr-2">
-      <i class="mdi mdi-kodi "></i>                 
+      <i class="mdi mdi-checkbox-multiple-marked"></i>                 
     </span>
-    Assigned Class Routine
+    Assigned Class
   </h3> 
 </div>
 <div class="row">
@@ -42,7 +42,7 @@ require_once('header.php');
                             <td class="text-center"><?php echo $i; $i++; ?></td>
                             <td class="text-center"><?php echo getClassName($list['class_name'],'class_name') ;?></td>
                             <td class="text-center">
-                            <a href="routine-details.php? id=<?php echo $list['class_name'] ;?>" class="btn btn-sm btn-success"><i class="mdi mdi-eye"></i>View Class Routine</a>
+                            <a href="class-details.php? id=<?php echo $list['class_name'] ;?>" class="btn btn-sm btn-success"><i class="mdi mdi-eye"></i>View Class Details</a>
                             </td>
                         </tr>
                         <?php endforeach; ?>
