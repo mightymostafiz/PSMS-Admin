@@ -208,7 +208,7 @@ if(!isset($_SESSION['teacher_loggedin'])){
 
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-5" aria-expanded="false" aria-controls="ui-5">
-              <span class="menu-title">Classes</span>
+              <span class="menu-title">Students - Attendance</span>
               <i class="menu-arrow"></i>
               <i class="mdi mdi-library menu-icon"></i>
             </a>

@@ -1,47 +1,77 @@
 <?php 
 require_once('header.php'); 
-
 $teacher_id = $_SESSION['teacher_loggedin'][0]['id'];
 
-$statement = $pdo->prepare("SELECT password FROM teachers WHERE id=?");
-$statement->execute(array($teacher_id));
-$result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-$db_password = $result[0]['password'];
-
-
-if(isset($_POST['change_btn'])){
-    $current_password = $_POST['current_password'];
-    $new_password = $_POST['new_password'];
-    $confirm_new_password = $_POST['confirm_new_password'];
-
-    if(empty($current_password)){
-        $error = "Current Password is required!";
+if(isset($_POST['submit_btn'])){
+   $class_id = $_POST['select_class'];
+   if(isset($_POST['select_subject'])){
+        $subject_id = $_POST['select_subject'];
+   }
+   else{
+    $subject_id = '';
+   }
+   $att_date = $_POST['att_date'];
+    //  Attendance Cound
+    $stm = $pdo->prepare("SELECT * FROM attendance WHERE class_id=? AND subject_id=? AND teacher_id=? AND attendance_date=? ");
+    $stm->execute(array($class_id,$subject_id,$teacher_id,$att_date));
+    $attCount = $stm->rowCount();
+    // default set
+    $studentCount = NULL;
+    // DATE 
+    $today = date('Y-m-d');
+    // required check 
+    if(empty($class_id)){
+        $error = "Please Select a Calss Name";
     }
-    else if(empty($new_password)){
-        $error = "New Password is required!";
+    else if(empty($subject_id)){
+        $error = "Please Select a Subject Name";
     }
-    else if(strlen($new_password)< 6){
-        $error = "Please Enter more than 6 Digit New Password!";
+    else if(empty($att_date)){
+        $error = "Please Select Attandace Date";
     }
-    else if(empty($confirm_new_password)){
-        $error = "Confirm New password is required!";
+    else if($attCount ==1){
+        $error = "Attendance Already Submited, Thanks!";
     }
-    else if($new_password != $confirm_new_password){
-        $error = "New and Confirm New password doesn't match!";
-    }
-    else if(SHA1($current_password) != $db_password){
-        $error = "Current Password is Wrong!";
+    else if($attCount != $today){
+        $error = "You can submit only todays attendance. Thank You!";
     }
     else{
-        $newPassword = SHA1($confirm_new_password);
+        $stm = $pdo->prepare("SELECT id,name,roll FROM students WHERE current_class=?");
+        $stm->execute(array($class_id));
+        $studentCount = $stm->rowCount();
+        $studentList = $stm->fetchAll(PDO::FETCH_ASSOC);
 
-        $stm = $pdo->prepare("UPDATE teachers SET password=? WHERE id=?");
-        $stm->execute(array($newPassword,$teacher_id));
-
-        $success = "Change Password successfully done!";
-    }
+   }
 }
+
+// students attendance
+if(isset($_POST['attendance_submit'])){
+
+    $student_id = $_POST['student_id'];
+    $student_name = $_POST['student_name'];
+    $status = $_POST['status'];
+
+    $length = count($student_id);
+    $studentData = [];
+    for($i=0;$i<$length;$i++){
+        $studentData[$i]['id'] = $student_id[$i];
+        $studentData[$i]['name'] = $student_name[$i];
+        $studentData[$i]['status'] = $status[$i];
+    }
+
+    $final_st_data = json_encode($studentData);
+    
+    $class_id = $_POST['class_id'];
+    $subject_id = $_POST['subject_id'];
+    $att_date = $_POST['attendance_date'];
+
+    $insert = $pdo->prepare("INSERT INTO attendance(class_id,subject_id,attendance_date,student_data,teacher_id) VALUES(?,?,?,?,?)");
+    $insert->execute(array($class_id,$subject_id,$att_date,$final_st_data,$teacher_id));
+    $success = "Attendance Submit Successfully Done, Thanks!";
+
+}
+
 ?>
 <div class="main-panel">
     <div class="content-wrapper">
@@ -59,83 +89,170 @@ if(isset($_POST['change_btn'])){
                 <div class="card-body">  
                     <!-- alert -->
                     <?php if(isset($error)):?>
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger text-center">
                             <?php echo $error; ?>
                         </div>
                     <?php endif; ?>
 
                     <?php if(isset($success)):?>
-                        <div class="alert alert-success">
+                        <div class="alert alert-success text-center">
                             <?php echo $success; ?>
                         </div>
                     <?php endif; ?>
 
                     <form class="forms-sample" method="POST" action="">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                 <label for="select_class">Select Class</label>
-                                <select name="" id="select_class" class="form-control">
-                                    <option value=""></option>
+                                <select name="select_class" id="select_class" class="form-control">
+                                    <option value="">Select Class</option>
+                                    <?php
+                                    $stm = $pdo->prepare("SELECT DISTINCT class_name FROM class_routine WHERE teacher_id=? ORDER BY class_name ASC");
+                                    $stm->execute(array($teacher_id));
+                                    $classList = $stm->fetchAll(PDO::FETCH_ASSOC);
+        
+                                    foreach($classList as $list):
+                                    ?>
+                                    
+                                    <option
+                                    <?php
+                                        if(isset($_POST['select_class']) AND $_POST['select_class'] == $list['class_name']){
+                                            echo "selected";
+                                        }
+                                    ?>
+                                    value="<?php echo $list['class_name'];?>"><?php echo getClassName($list['class_name'],'class_name') ;?></option>
+                                    
+                                    <?php endforeach; ?>
                                 </select>
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                 <label for="select_subject">Select Subject</label>
-                                <select name="" id="select_subject" class="form-control">
-                                    <option value=""></option>
+                                <select name="select_subject" id="select_subject" class="form-control"> getSubjectName
+                                <?php
+                                    if(isset($_POST['select_subject'])){
+                                        echo '<option value="'.$_POST['select_subject'].'">'.getSubjectName($_POST['select_subject']).'</option>';
+                                    }
+                                ?>
                                 </select>
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
-                                <label for="select_class">Select Date</label>
-                                <input type="date" name="" id="" class="form-control">
+                                <label for="att_date">Select Date</label>
+                                <input type="date" value="<?php if(isset($_POST['att_date'])){
+                                        echo $_POST['att_date'];
+                                    }
+                                ?>" name="att_date" id="att_date" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 mt-3">
+                                <div class="form-group">
+                                <button type="submit" name="submit_btn" class="btn btn-gradient-primary mr-2">Attendance</button> 
                                 </div>
                             </div>
                         </div>
-
-                        <button type="submit" name="change_btn" class="btn btn-gradient-primary mr-2">Submit Attendance</button> 
+                        
                     </form>
                 </div>
                 </div>
             </div>
         </div>
     </div>
-<div class="content-wrapper">
+
+<?php if(isset($_POST['submit_btn']) AND $studentCount != NULL): ?>
+    <?php if($studentCount >0): ?>
+<div class="content-wrapper" style="margin-top:-80px">
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body"> 
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <td>#</td>
-                                <td>Student Name</td>
-                                <td>Student Roll</td>
-                                <td>Absent</td>
-                                <td>Present</td>
-                            </tr>
+                    <form action="" method="POST">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Student Name</th>
+                                    <th>Student Roll</th>
+                                    <th>Present</th>
+                                    <th>Absent</th>
+                                </tr>
+                            </thead>
                             <tbody>
-                                <td>1</td>
-                                <td>Mosta</td>
-                                <td>245</td>
-                                <td><label for="absent"><input type="radio" name="attendance" id="absent"> Absent</label></td>
-                                <td><label for="present"><input type="radio" name="attendance" id="present"> Present</label></td>
+                                <?php 
+                                $i=1; 
+                                $a=0; 
+                                foreach($studentList as $newList) :
+                                ?>
+                                <tr>
+                                    <td><?php echo $i;?></td>
+                                    <td><?php echo $newList['name'];?> 
+                                    <input type="hidden" value="<?php echo $newList['id'];?>" name="student_id[]">
+                                    <input type="hidden" value="<?php echo $newList['name'];?>" name="student_name[]">
+
+                                    <input type="hidden" value="<?php echo $_POST['select_class'];?>" name="class_id">
+                                    <input type="hidden" value="<?php echo $_POST['select_subject'];?>" name="subject_id">
+                                    <input type="hidden" value="<?php echo $_POST['att_date'];?>" name="attendance_date">
+                                    </td>
+
+                                    <td><?php echo $newList['roll'];?></td>
+                                    <td><label for="Present-<?php echo $i;?>"><input type="radio" value="1" name="status[<?php echo $a;?>]" id="Present-<?php echo $i;?>"> Present</label></td>
+                                    <td><label for="Absent-<?php echo $i;?>"><input type="radio" value="0" name="status[<?php echo $a;?>]" id="Absent-<?php echo $i;?>" checked> Absent</label></td>
+
+                                    
+                                </tr>
+                                <?php $i++;$a++; endforeach;?>
                             </tbody>
-                        </thead>
-                    </table>
+                        </table>
+                <br>
+                <br>
+                <div class="form-group">
+                    <input type="submit" name="attendance_submit" class="btn btn-success btn-sm" value="Submit Attendance">
+                </div>
+
+                </form>
 
                 </div>
             </div>
         </div>
     </div>
 </div>
+<?php else: ?>
+    <div class="alert alert-danger text-center">
+        <h4>Student Not Found</h4>
+    </div>
+<?php endif; ?>
+<?php endif; ?>
     <!-- finsih -->
 </div>
         
 
 <?php require_once('footer.php'); ?>
+
+<script>
+    $('#select_class').change(function(){
+        let class_id = $(this).val();
+        let teacher_id = <?php echo $teacher_id; ?>;
+        
+        $.ajax({
+            type: "POST",
+            url:'ajax.php',
+            data: {
+                teacher_id:teacher_id,
+                class_id:class_id,
+            },
+            success:function(response){
+                let data = response;
+                $('#select_subject').html(data);
+                // console.log(data);
+            }
+        });
+    });
+</script>
+
+       

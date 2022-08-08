@@ -24,8 +24,8 @@ if(isset($_POST['create_btn'])){
         $error = "Time to is required!!";
     }
     else{
-        $insert = $pdo->prepare("INSERT INTO class_routine(class_name,subject_id,teacher_id,time_from,time_to,room_no) VALUES(?,?,?,?,?,?)");
-        $insert->execute(array($class_name,$subject_name,$teacher_id,$time_from,$time_to,$room_no));
+        $insert = $pdo->prepare("INSERT INTO class_routine(class_name,subject_id,teacher_id,time_from,time_to,room_no,day) VALUES(?,?,?,?,?,?,?)");
+        $insert->execute(array($class_name,$subject_name,$teacher_id,$time_from,$time_to,$room_no,$day));
 
         $success = "Routine Create Success!";
     }
@@ -83,7 +83,7 @@ if(isset($_POST['create_btn'])){
 
                     <!-- Select Day -->
                     <div class="form-group">
-                        <label for="day">Select Day:</label> 
+                        <label for="day">Select Day</label> 
                         <select name="day" id="day" class="form-control">
                             <option value="Saturday">Saturday</option>
                             <option value="Sunday">Sunday</option>

@@ -103,6 +103,7 @@ if(isset($_POST['filter_btn'])){
         </div>
     </div>
 </div>
+
 <?php else :?>
 <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
