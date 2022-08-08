@@ -245,6 +245,7 @@ if(!isset($_SESSION['admin_loggedin'])){
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="student-all.php">All Students</a></li>
+                <li class="nav-item"> <a class="nav-link" href="attendance.php">Attendance</a></li>
                 <li class="nav-item"> <a class="nav-link" href="">Search</a></li>
                 <li class="nav-item"> <a class="nav-link" href="">Result</a></li>
               </ul>

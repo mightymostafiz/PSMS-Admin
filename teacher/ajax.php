@@ -12,13 +12,6 @@ if(isset($_POST['class_id'])){
     ");
     $stm->execute(array($class_id,$teacher_id));
     $subject_list = $stm->fetchAll(PDO::FETCH_ASSOC);
-
-    // print_r($subject_list);
-
-    // $stm = $pdo->prepare("SELECT subjects FROM class WHERE id=?");
-    // $stm->execute(array($class_id));
-    // $subject_ids = $stm->fetchAll(PDO::FETCH_ASSOC);
-    // $subject_ids = $subject_ids[0]['subjects'];
     
     $get_subject_options = '';
     foreach($subject_list as $newSubject) {

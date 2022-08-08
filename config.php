@@ -51,6 +51,15 @@
     return $result[0]['name']."-".$result[0]['code'];
     }
 
+    // get teacher name and info from teacher table
+    function getTeacherName($id,$col){
+    global $pdo;
+    $stm=$pdo->prepare("SELECT $col FROM teachers WHERE id=?");
+    $stm->execute(array($id));
+    $result = $stm->fetchAll(PDO::FETCH_ASSOC);
+    return $result[0][$col];
+    }
+
     // get techer id form assign teacher table 
     function getSubjectTeacher($id){
     global $pdo;
