@@ -271,7 +271,7 @@ if(!isset($_SESSION['admin_loggedin'])){
             <a class="nav-link" data-toggle="collapse" href="#ui-7" aria-expanded="false" aria-controls="ui-7">
               <span class="menu-title">Student Marks</span>
               <i class="menu-arrow"></i>
-              <i class="mdi mdi-contacts menu-icon"></i>
+              <i class="mdi mdi-certificate menu-icon"></i>
             </a>
             <div class="collapse" id="ui-7">
               <ul class="nav flex-column sub-menu">

@@ -12,9 +12,10 @@ if(isset($_POST['submit_btn'])){
     $subject_id = '';
    }
    $att_date = $_POST['att_date'];
+
     //  Attendance Cound
-    $stm = $pdo->prepare("SELECT * FROM attendance WHERE class_id=? AND subject_id=? AND teacher_id=? AND attendance_date=? ");
-    $stm->execute(array($class_id,$subject_id,$teacher_id,$att_date));
+    $stm = $pdo->prepare("SELECT * FROM attendance WHERE class_id=? AND subject_id=? AND attendance_date=? ");
+    $stm->execute(array($class_id,$subject_id,$att_date));
     $attCount = $stm->rowCount();
     // default set
     $studentCount = NULL;
@@ -202,8 +203,10 @@ if(isset($_POST['submit_btn'])){
                 let data = response;
                 $('#select_subject').html(data);
                 // console.log(data);
+
             }
         });
+
     });
 </script>
 

@@ -224,7 +224,7 @@ if(!isset($_SESSION['teacher_loggedin'])){
             <a class="nav-link" data-toggle="collapse" href="#ui-6" aria-expanded="false" aria-controls="ui-6">
               <span class="menu-title">Submit Exam Marks</span>
               <i class="menu-arrow"></i>
-              <i class="mdi mdi-library menu-icon"></i>
+              <i class="mdi mdi mdi-certificate menu-icon"></i>
             </a>
             <div class="collapse" id="ui-6">
               <ul class="nav flex-column sub-menu">
