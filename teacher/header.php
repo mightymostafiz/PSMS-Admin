@@ -220,6 +220,19 @@ if(!isset($_SESSION['teacher_loggedin'])){
             </div>
           </li>
 
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-6" aria-expanded="false" aria-controls="ui-6">
+              <span class="menu-title">Submit Exam Marks</span>
+              <i class="menu-arrow"></i>
+              <i class="mdi mdi-library menu-icon"></i>
+            </a>
+            <div class="collapse" id="ui-6">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="marks-new.php">New Marks</a></li>
+                <li class="nav-item"> <a class="nav-link" href="marks-history.php">Mark History</a></li>
+              </ul>
+            </div>
+          </li>
   
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
