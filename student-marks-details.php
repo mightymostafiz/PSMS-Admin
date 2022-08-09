@@ -78,12 +78,13 @@ foreach($getMarks3 as $marksByStudent3){
                     </tr>
                     <?php  
                     $bb=0;
+                    $i=1;
                     $student_data = []; 
                     foreach($st_list as $key => $newList) : ?>
                     <tr>
-                        <td>1</td>
+                        <td class="text-center"><?php echo $i;$i++; ?></td>
                         <td><?php echo $newList[0]['st_name']; ?></td>
-                        <td>
+                        <td class="text-center">
                             <?php 
                             if($getMarks3Count == $getMarksCount): 
                                 $total=0;
@@ -99,7 +100,7 @@ foreach($getMarks3 as $marksByStudent3){
                                 <span class="alert alert-danger">All Subject mark not submitted.</span>
                             <?php endif; ?>
                         </td>
-                        <td>
+                        <td class="text-center">
                         <?php 
                             if($getMarks3Count == $getMarks2Count): 
                                 $total2=0;
@@ -115,7 +116,7 @@ foreach($getMarks3 as $marksByStudent3){
                                 <span class="alert alert-danger">All Subject mark not submitted.</span>
                             <?php endif; ?>
                         </td>
-                        <td>
+                        <td class="text-center">
                         <?php 
                             $ii=1;
                             $total3=0;

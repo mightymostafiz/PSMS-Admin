@@ -109,10 +109,10 @@ if(isset($_POST['mark_submit'])){
             <div class="card">
             <div class="card-body">  
                 <?php if(isset($error)) :?>
-                <div class="alert alert-danger"><?php echo $error;?></div>
+                <div class="alert alert-danger text-center"><?php echo $error;?></div>
                 <?php endif;?>
                 <?php if(isset($success)) :?>
-                <div class="alert alert-success"><?php echo $success;?></div>
+                <div class="alert alert-success text-center"><?php echo $success;?></div>
                 <?php endif;?>
                 <form class="forms-sample" method="POST" action="">
                     <div class="row">
